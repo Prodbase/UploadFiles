@@ -1,6 +1,8 @@
+import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import routes from './routes/routes'
+import { connection } from './config/database'
 
 class App {
     public express: express.Application
@@ -14,6 +16,9 @@ class App {
         this.express.use(express.json())
         this.express.use(cors())
         this.express.use(routes)
+        connection
+            .then(() => console.log("Connected to database"))
+            .catch(error => console.log(`Erro to connect database ${error}`))
     }
 }
 
